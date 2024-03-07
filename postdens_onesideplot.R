@@ -3,7 +3,7 @@
 ## Create a density plot on one side.
 ##
 ## Created: 2024-02-19 Keisuke Nakakno
-## Modified: 2024-02-19 Keisuke Nakano
+## Modified: 2024-03-08 Keisuke Nakano
 ##
 ## Dependent: tidyverse
 
@@ -15,8 +15,7 @@ postdens_onesideplot <- function(post_sample,
                                  include = TRUE, reverse = FALSE,
                                  from = min(post_sample), to = max(post_sample),
                                  linecolor = 'black', fillcolor = 'dodgerblue',
-                                 xlab = NULL, ylab = NULL, title = NULL,
-                                 minimal = FALSE) {
+                                 xlab = NULL, ylab = NULL, title = NULL) {
   ## function to create a posterior density plot with values greater than the cutpoint.
   ## params:
   ##  post_sample = posterior sample (must be a vector)
@@ -60,11 +59,7 @@ postdens_onesideplot <- function(post_sample,
                 fill = fillcolor) +
     geom_line(color = linecolor) +
     labs(x = xlab, y = ylab, title = title)
-  
-  if (minimal) {
-    p <- p + theme_minimal()
-  }
-  
+
   cat('prob:', prob)
   return(p)
 }
