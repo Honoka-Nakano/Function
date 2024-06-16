@@ -3,7 +3,7 @@
 ## Create a density plot on one side.
 ##
 ## Created: 2024-02-19 Keisuke Nakakno
-## Modified: 2024-03-08 Keisuke Nakano
+## Modified: 2024-06-16 Keisuke Nakano
 ##
 ## Dependent: tidyverse
 
@@ -37,21 +37,21 @@ postdens_onesideplot <- function(post_sample,
   if (reverse) {
     if (include) {
       df_ribbon <- df |> filter(parameter <= cutpoint)
-      prob <- mean(df$parameter <= cutpoint)
+      prob <- mean(post_sample <= cutpoint)
     } else {
       df_ribbon <- df |> filter(parameter < cutpoint)
-      prob <- mean(df$parameter < cutpoint)
+      prob <- mean(post_sample < cutpoint)
     }
   } else {
     if (include) {
       df_ribbon <- df |> filter(parameter >= cutpoint)
-      prob <- mean(df$parameter >= cutpoint)
+      prob <- mean(post_sample >= cutpoint)
     } else {
       df_ribbon <- df |> filter(parameter > cutpoint)
-      prob <- mean(df$parameter > cutpoint)
+      prob <- mean(post_sample > cutpoint)
     }
   }
-
+  
   p <- ggplot(df, aes(x = parameter, y = density)) +
     geom_hline(yintercept = 0, color = 'gray') +
     geom_ribbon(data = df_ribbon,
@@ -59,7 +59,7 @@ postdens_onesideplot <- function(post_sample,
                 fill = fillcolor) +
     geom_line(color = linecolor) +
     labs(x = xlab, y = ylab, title = title)
-
+  
   cat('prob:', prob)
   return(p)
 }
